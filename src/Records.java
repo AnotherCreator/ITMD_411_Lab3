@@ -29,13 +29,9 @@ public class Records extends BankRecords {
         BankRecords bkRecords = new BankRecords();
         bkRecords.readClientData();
 
-        /*
-        - Average income for males vs. females
-        - Number of females with a mortgage and savings account
-        - Number of males with both a car and 1 child per location
-        */
         clientAvgIncome();
         clientHasSavings();
+        clientChildPerRegion();
     }
 
     public Records() {
@@ -46,25 +42,7 @@ public class Records extends BankRecords {
         }
     }
 
-    private static void clientHasSavings() {
-        Arrays.sort(bankEntry, new ClientHasSavingsComparator());
-        int femWithSaveAndMort = 0;
-
-        for (BankRecords bankRecords : bankEntry) {
-            if (bankRecords.getClientSex().equals("FEMALE")) {
-                if (bankRecords.getClientSaveActStatus().equals("YES")
-                        && (bankRecords.getClientMortgageStatus().equals("YES"))) {
-                    ++femWithSaveAndMort;
-                }
-            }
-        }
-
-        System.out.print("\n==================================================");
-        System.out.printf("\nFemales With Savings & Mortgage: %d", (femWithSaveAndMort));
-        System.out.print("\n==================================================");
-    }
-
-    private static void clientAvgIncome() {
+    private static void clientAvgIncome() { // - Average income for males vs. females
         Arrays.sort(bankEntry, new ClientSexComparator());
 
         int clientMales = 0;
@@ -85,6 +63,67 @@ public class Records extends BankRecords {
         System.out.print("\n==================================================");
         System.out.printf("\nAvg Male Income: %.2f", (maleIncome / clientMales));
         System.out.printf("\nAvg Female Income: %.2f", (femaleIncome / clientFemales));
+        System.out.print("\n==================================================");
+    }
+
+    private static void clientHasSavings() { // - Number of females with a mortgage and savings account
+        Arrays.sort(bankEntry, new ClientHasSavingsComparator());
+        int femWithSaveAndMort = 0;
+
+        for (BankRecords bankRecords : bankEntry) {
+            if (bankRecords.getClientSex().equals("FEMALE")) {
+                if (bankRecords.getClientSaveActStatus().equals("YES")
+                        && (bankRecords.getClientMortgageStatus().equals("YES"))) {
+                    ++femWithSaveAndMort;
+                }
+            }
+        }
+
+        System.out.print("\n==================================================");
+        System.out.printf("\nFemales With Savings & Mortgage: %d", (femWithSaveAndMort));
+        System.out.print("\n==================================================");
+    }
+
+    private static void clientChildPerRegion() { // Find Males with 1 car + 1 child
+        Arrays.sort(bankEntry, new ClientRegionComparator());
+
+        int innerCity = 0;
+        int rural = 0;
+        int suburban = 0;
+        int town = 0;
+
+        for (BankRecords bankRecords : bankEntry) {
+            if (bankRecords.getClientSex().equals("MALE")) {
+                if ((bankRecords.getClientRegion().equals("INNER_CITY"))
+                        && (bankRecords.getClientChildAmount() == 1)
+                        && (bankRecords.getClientCarStatus().equals("YES"))) {
+                    ++innerCity;
+                }
+                else if ((bankRecords.getClientRegion().equals("RURAL"))
+                        && (bankRecords.getClientChildAmount() == 1)
+                        && (bankRecords.getClientCarStatus().equals("YES"))) {
+                    ++rural;
+                }
+                else if ((bankRecords.getClientRegion().equals("SUBURBAN"))
+                        && (bankRecords.getClientChildAmount() == 1)
+                        && (bankRecords.getClientCarStatus().equals("YES"))) {
+                    ++suburban;
+                }
+                else if ((bankRecords.getClientRegion().equals("TOWN"))
+                        && (bankRecords.getClientChildAmount() == 1)
+                        && (bankRecords.getClientCarStatus().equals("YES"))) {
+                    ++town;
+                }
+            }
+        }
+
+        System.out.print("\n==================================================\n");
+        System.out.printf("""
+                        InnerCity Males W/ 1 Car + 1 Child: %d
+                        Rural Males W/ 1 Car + 1 Child: %d
+                        Suburban Males W/ 1 Car + 1 Child: %d
+                        Town Males W/ 1 Car + 1 Child: %d""",
+                        innerCity, rural, suburban, town);
         System.out.print("\n==================================================");
     }
 
