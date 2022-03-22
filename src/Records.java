@@ -16,22 +16,13 @@ Records.java will print out to the console and print out to a .txt file
 - Number of males with both a car and 1 child per location
 */
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Records extends BankRecords {
     static FileWriter writer = null;
-
-    // Create a new .txt file with the required analytics
-    public Records() {
-        try {
-            writer = new FileWriter("bankrecords.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
         // Prints first 25 client data
@@ -44,10 +35,38 @@ public class Records extends BankRecords {
         - Number of males with both a car and 1 child per location
         */
         clientAvgIncome();
+        clientHasSavings();
+    }
+
+    public Records() {
+        try {
+            writer = new FileWriter("bankrecords.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void clientHasSavings() {
+        Arrays.sort(bankEntry, new ClientHasSavingsComparator());
+        int femWithSaveAndMort = 0;
+
+        for (BankRecords bankRecords : bankEntry) {
+            if (bankRecords.getClientSex().equals("FEMALE")) {
+                if (bankRecords.getClientSaveActStatus().equals("YES")
+                        && (bankRecords.getClientMortgageStatus().equals("YES"))) {
+                    ++femWithSaveAndMort;
+                }
+            }
+        }
+
+        System.out.print("\n==================================================");
+        System.out.printf("\nFemales With Savings & Mortgage: %d", (femWithSaveAndMort));
+        System.out.print("\n==================================================");
     }
 
     private static void clientAvgIncome() {
         Arrays.sort(bankEntry, new ClientSexComparator());
+
         int clientMales = 0;
         int clientFemales = 0;
         double maleIncome = 0;
@@ -69,5 +88,17 @@ public class Records extends BankRecords {
         System.out.print("\n==================================================");
     }
 
-
+//    private static void createFile() {
+//        try {
+//            File dataResult = new File("ITMD_411_Lab3\\fileOutput\\dataResult.txt");
+//            if (dataResult.createNewFile()) {
+//                System.out.print("\nNew Data File Created");
+//            }
+//            else {
+//                System.out.print("\nFile Already Exists");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
