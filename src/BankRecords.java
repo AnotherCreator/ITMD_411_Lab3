@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 // Child-class of parent-class Client
-public class BankRecords extends Client{
+public class BankRecords extends Client {
     // Variables
     static BankRecords[] bankEntry = new BankRecords[600];
     static ArrayList<List<String>> bankAccDetails = new ArrayList<>(600);
