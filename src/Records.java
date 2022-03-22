@@ -1,4 +1,20 @@
-// Call the comparator classes here
+/*
+Josh Reginaldo
+ITMD-411
+
+Lab 3 - Bank Record Analytics
+
+A bank has received a .csv file containing raw data of various clients.
+
+Using Lab 2 as the foundation of the code, now implement the use of the java.util.comparator utility class to
+create a data analysis based of the records in the .csv file.
+
+Records.java will print out to the console and print out to a .txt file
+
+- Average income for males vs. females
+- Number of females with a mortgage and savings account
+- Number of males with both a car and 1 child per location
+*/
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,15 +38,12 @@ public class Records extends BankRecords {
         BankRecords bkRecords = new BankRecords();
         bkRecords.readClientData();
 
+        /*
+        - Average income for males vs. females
+        - Number of females with a mortgage and savings account
+        - Number of males with both a car and 1 child per location
+        */
         clientAvgIncome();
-    }
-
-    private static void clientAvgAge() {
-
-    }
-
-    private static void clientAvgRegion() {
-
     }
 
     private static void clientAvgIncome() {
@@ -56,15 +69,5 @@ public class Records extends BankRecords {
         System.out.print("\n==================================================");
     }
 
-    private static void clientAvgMarriage() {
 
-    }
-
-    private static void clientAvgChild() {
-
-    }
-
-    private static void clientAvgCar() {
-
-    }
 }
