@@ -61,8 +61,8 @@ public class Records extends BankRecords {
         }
 
         System.out.print("\n==================================================");
-        System.out.printf("\nAvg Male Income: %.2f", (maleIncome / clientMales));
-        System.out.printf("\nAvg Female Income: %.2f", (femaleIncome / clientFemales));
+        System.out.printf("\nAvg Male Income: $%.2f", (maleIncome / clientMales));
+        System.out.printf("\nAvg Female Income: $%.2f", (femaleIncome / clientFemales));
         System.out.print("\n==================================================");
     }
 
