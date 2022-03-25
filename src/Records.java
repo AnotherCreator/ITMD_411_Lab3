@@ -29,6 +29,7 @@ public class Records extends BankRecords {
         BankRecords bkRecords = new BankRecords();
         bkRecords.readClientData();
 
+        // Sort ArrayList respectively and print data-analysis
         clientAvgIncome();
         clientHasSavings();
         clientChildPerRegion();
@@ -42,7 +43,7 @@ public class Records extends BankRecords {
         }
     }
 
-    private static void clientAvgIncome() { // - Average income for males vs. females
+    private static void clientAvgIncome() { // Average income for males vs. females
         Arrays.sort(bankEntry, new ClientSexComparator());
 
         int clientMales = 0;
@@ -66,7 +67,7 @@ public class Records extends BankRecords {
         System.out.print("\n==================================================");
     }
 
-    private static void clientHasSavings() { // - Number of females with a mortgage and savings account
+    private static void clientHasSavings() { // Number of females with a mortgage and savings account
         Arrays.sort(bankEntry, new ClientHasSavingsComparator());
         int femWithSaveAndMort = 0;
 
