@@ -152,18 +152,4 @@ public class Records extends BankRecords {
             e.printStackTrace();
         }
     }
-
-    private static void createFile() {
-        try {
-            File dataResult = new File("ITMD_411_Lab3\\fileOutput\\dataResult.txt");
-            if (dataResult.createNewFile()) {
-                System.out.print("\nNew Data File Created");
-            }
-            else {
-                System.out.print("\nFile Already Exists");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
