@@ -166,7 +166,6 @@ public class BankRecords extends Client {
             bankEntry[i].setClientPepStatus(rowData.get(11));
             i++;
         }
-        printClientData();
     }
 
     @Override
