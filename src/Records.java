@@ -24,19 +24,25 @@ import java.util.Arrays;
 public class Records extends BankRecords {
     static FileWriter writer = null;
 
+    public Records() {
+        try {
+            writer = new FileWriter("bankrecords.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         // Prints first 25 client data
-        BankRecords bkRecords = new BankRecords();
-        bkRecords.readClientData();
+        Records clientRecords = new Records();
+        clientRecords.readClientData();
 
         clientAvgIncome();
         clientHasSavings();
         clientChildPerRegion();
-    }
 
-    public Records() {
         try {
-            writer = new FileWriter("bankrecords.txt");
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +69,13 @@ public class Records extends BankRecords {
         System.out.print("\n==================================================");
         System.out.printf("\nAvg Male Income: %.2f", (maleIncome / clientMales));
         System.out.printf("\nAvg Female Income: %.2f", (femaleIncome / clientFemales));
-        System.out.print("\n==================================================");
+
+        try { // Write to file
+            writer.write("Avg Male Income: $" + (maleIncome / clientMales));
+            writer.write("\nAvg Female Income: $" + (femaleIncome / clientFemales));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void clientHasSavings() { // - Number of females with a mortgage and savings account
@@ -81,7 +93,12 @@ public class Records extends BankRecords {
 
         System.out.print("\n==================================================");
         System.out.printf("\nFemales With Savings & Mortgage: %d", (femWithSaveAndMort));
-        System.out.print("\n==================================================");
+
+        try { // Write to file
+            writer.write("\n\nFemales With Savings & Mortgage: " + femWithSaveAndMort);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void clientChildPerRegion() { // Find Males with 1 car + 1 child
@@ -125,19 +142,28 @@ public class Records extends BankRecords {
                         Town Males W/ 1 Car + 1 Child: %d""",
                         innerCity, rural, suburban, town);
         System.out.print("\n==================================================");
+
+        try { // Write to file
+            writer.write("\n\nInnerCity Males W/ 1 Car + 1 Child: " + innerCity);
+            writer.write("\nRural Males W/ 1 Car + 1 Child: " + rural);
+            writer.write("\nSuburban Males W/ 1 Car + 1 Child: " + suburban);
+            writer.write("\nTown Males W/ 1 Car + 1 Child: " + town);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-//    private static void createFile() {
-//        try {
-//            File dataResult = new File("ITMD_411_Lab3\\fileOutput\\dataResult.txt");
-//            if (dataResult.createNewFile()) {
-//                System.out.print("\nNew Data File Created");
-//            }
-//            else {
-//                System.out.print("\nFile Already Exists");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private static void createFile() {
+        try {
+            File dataResult = new File("ITMD_411_Lab3\\fileOutput\\dataResult.txt");
+            if (dataResult.createNewFile()) {
+                System.out.print("\nNew Data File Created");
+            }
+            else {
+                System.out.print("\nFile Already Exists");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
